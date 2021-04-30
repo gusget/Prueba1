@@ -1,0 +1,33 @@
+var detector_status=true;var detector_block_close=false;var detector_path="/img/";var detector_icon_size=100;var detector_title="Bloqueador de publicidad detectado";var detector_description="¡Hola! Hemos detectado que te encuentras usando un bloqueador de publicidad. Nuestro sitio web no esta saturado de banners publicitarios por lo que no se afectara tu experiencia de navegación. Por favor desactiva el bloqueador en nuestro sitio web para poder continuar.";var detector_close="Cerrar";var detector_reload="Listo, ¡Recarga la Pagina!";var detector_instructions_title="Instrucciones para desactivar adblock en tu navegador";var detector_instructions_steps_1="Mira en la parte superior derecha de tu navegador.";var detector_instructions_steps_2="Busca el icono rojo y elige tu bloqueador de publicidad para ver las instrucciones.";var detector_loaded=false;$(function(){if(detector_status&&typeof loadingAds==="undefined"){detector_launch(detector_block_close);}});function detector_launch(detector_block_close){var html="";html+='<div id="detector" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="UltimateAdBlockDetector">';html+='<div class="modal-dialog" role="document">';html+='<div class="modal-content">';html+='<div class="modal-header">';html+='<button type="button" class="close" data-dismiss="modal" aria-label="'+
+detector_close+
+'"><span aria-hidden="true">&times;</span></button>';html+='<h4 class="modal-title">'+detector_title+"</h4>";html+="</div>";html+='<div class="modal-body">';html+='<div id="detector_step_1">';html+="<p>"+detector_description+"</p>";html+='<p><img class="img-responsive center-block" src="'+
+detector_path+
+'browser.png"></p>';html+="<ol>";html+="<li>"+detector_instructions_steps_1+"</li>";html+="<li>"+detector_instructions_steps_2+"</li>";html+="</ol>";html+='<div class="row" id="detector_plugins">';html+='<div class="col-xs-4"><p class="text-center"><a href="#" class="plugin" data-plugin="adblock"><img src="'+
+detector_path+
+'icon.adblock.png" width="'+
+detector_icon_size+
+'" height="'+
+detector_icon_size+
+'" alt="Ad Block"></a></p></div>';html+='<div class="col-xs-4"><p class="text-center"><a href="#" class="plugin" data-plugin="adblock_plus"><img src="'+
+detector_path+
+'icon.adblock_plus.png" width="'+
+detector_icon_size+
+'" height="'+
+detector_icon_size+
+'" alt="Ad Block Plus"></a></p></div>';html+='<div class="col-xs-4"><p class="text-center"><a href="#" class="plugin" data-plugin="ublock_origin"><img src="'+
+detector_path+
+'icon.ublock_origin.png" width="'+
+detector_icon_size+
+'" height="'+
+detector_icon_size+
+'" alt="uBlock Origin"></a></p></div>';html+='<div style="clear: left;"></div></div>';html+="</div>";html+='<div id="detector_step_2" class="hidden">';html+='<img id="detector_img_instructions" class="center-block" src="" alt="Instructions">';html+="</div>";html+="</div>";html+='<div class="modal-footer">';html+='<button id="detector_close" type="button" class="btn btn-block btn-primary" data-dismiss="modal">'+
+detector_close+
+"</button>";html+='<button id="detector_reload" type="button" class="btn btn-block btn-primary hidden">'+
+detector_reload+
+"</button>";html+="</div>";html+="</div>";html+="</div>";$("body").append(html);if(!detector_block_close){$("#detector .modal-header button.close").removeClass("hidden");$("#detector .modal-footer").removeClass("hidden");}else{$("#detector .modal-header button.close").addClass("hidden");$("#detector .modal-footer").addClass("hidden");}
+var css=document.createElement("style");css.type="text/css";css.innerHTML="#detector_plugins a.plugin img { width: "+
+detector_icon_size+
+"px; height: "+
+detector_icon_size+
+"px; padding: 10px; border-radius: 5px; border: 3px solid #fff; } #detector_plugins a.plugin:hover img { border-color: #ddd; }";document.body.appendChild(css);$("#detector_plugins a.plugin").click(function(e){e.preventDefault();$("#detector_img_instructions").attr("src",detector_path+"preview."+$(this).data("plugin")+".png");$("#detector .modal-footer").removeClass("hidden");$("#detector_close").addClass("hidden");$("#detector_reload").removeClass("hidden");$("#detector_step_1").addClass("hidden");$("#detector_step_2").removeClass("hidden");});$("#detector_reload").click(function(e){e.preventDefault();window.location.reload(false);});if(!detector_block_close){if(detector_loaded){$("#detector").data("bs.modal").options.backdrop=true;$("#detector").data("bs.modal").options.keyboard=true;}else{$("#detector").modal({backdrop:true,keyboard:true});}}else{if(detector_loaded){$("#detector").data("bs.modal").options.backdrop="static";$("#detector").data("bs.modal").options.keyboard=false;}else{$("#detector").modal({backdrop:"static",keyboard:false});}}
+$("#detector").modal("show");$("#detector").on("hidden.bs.modal",function(e){detector_loaded=true;});}
